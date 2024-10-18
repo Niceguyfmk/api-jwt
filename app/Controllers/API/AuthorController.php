@@ -139,7 +139,14 @@ class AuthorController extends ResourceController
 
     //Profile Method
     // [GET] -> Protected Method -> Valid Token in req header
-    public function authorProfile(){}
+    public function authorProfile(){
+
+        return $this->respond([
+            "status" => true,
+            "message" => "Author Profile Information",
+            "data" => $this->request->userData
+        ]);
+    }
 
     //Logout Method
     // [GET] -> Protected Method -> Valid Token in req header

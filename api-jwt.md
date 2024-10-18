@@ -21,7 +21,7 @@ Routes:
 /auth/register -> [POST] -> name, email, password, phone_no -> completed
 /auth/login -> [POST] -> email, password (Token value - JWT) -> completed
 
-/author/profile -> [GET] -> Protected Route
+/author/profile -> [GET] -> Protected Route -> completed
 /author/logout -> [GET] -> Protected Route
 
 

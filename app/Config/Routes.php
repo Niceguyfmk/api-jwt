@@ -13,15 +13,15 @@ $routes->post("/auth/register", "API\AuthorController::registerAuthor");
 $routes->post("/auth/login", "API\AuthorController::loginAuthor"); //valid token value generated
 
 //Protected API Routes
-$routes->group("author", ["namespace" => "App\Controllers\API"], function($routes){
+$routes->group("author", ["namespace" => "App\Controllers\API", "filter" => "jwt_auth"], function($routes){
 
     //Author Routes
-    $routes->get("/auth/profile", "API\AuthorController::authorProfile");
-    $routes->get("/auth/logout", "API\AuthorController::logout");
+    $routes->get("profile", "AuthorController::authorProfile");
+    $routes->get("logout", "AuthorController::logout");
 
     //Book Routes
-    $routes->get("add-book", "API\BookController::createBook");
-    $routes->get("list-book", "API\BookController::authorBooks");
-    $routes->get("delete-book/(:num)", "API\BookController::deleteAuthorBook/$1");
+    $routes->get("add-book", "BookController::createBook");
+    $routes->get("list-book", "BookController::authorBooks");
+    $routes->get("delete-book/(:num)", "BookController::deleteAuthorBook/$1");
 
 });
