@@ -16,7 +16,47 @@ class BookController extends ResourceController
     // [POST] -> Protected Method -> Valid Token value to access it 
     // author_id, name, publication, cost
     public function createBook(){
+        $validationRules = [
+            "name" => [
+                "rules" => "required" 
+            ],
+            "cost" => [
+                "rules" => "required" 
+            ]
+        ];
 
+        if(!$this->validate($validationRules)){
+
+            return $this->respond([
+                "status" => false,
+                "message" => "Please provide the required fields",
+                "errors" => $this->validator->getErrors()
+            ]);
+        }
+
+        //Save book
+        $tokenInformation = $this->request->userData; 
+        $userId = $tokenInformation['user']->id;
+        $bookData = [
+            "author_id" => $userId,
+            "name"=> $this->request->getVar("name"),
+            "publication" => $this->request->getVar("publication"),
+            "cost" => $this->request->getVar("cost")
+        ];
+
+        if($this->model->newBook($bookData)){
+
+            return $this->respond([
+                "status" => true,
+                "message" => "Book created successfully"
+            ]);
+        }else{
+
+            return $this->respond([
+                "status" => false,
+                "message" => "Failed to create Book"
+            ]);
+        }
     }
 
     //List Books

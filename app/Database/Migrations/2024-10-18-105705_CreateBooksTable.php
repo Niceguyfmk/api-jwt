@@ -31,11 +31,6 @@ class CreateBooksTable extends Migration
                 "type" => "INT",
                 "null"=> false
             ],
-            "phone_no" => [
-                "type" => "VARCHAR",
-                "constraint" => "20",
-                "null"=> false
-            ],
             "created_at datetime default current_timestamp" 
         ]);
 

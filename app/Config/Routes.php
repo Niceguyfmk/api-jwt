@@ -20,7 +20,7 @@ $routes->group("author", ["namespace" => "App\Controllers\API", "filter" => "jwt
     $routes->get("logout", "AuthorController::logout");
 
     //Book Routes
-    $routes->get("add-book", "BookController::createBook");
+    $routes->post("add-book", "BookController::createBook");
     $routes->get("list-book", "BookController::authorBooks");
     $routes->get("delete-book/(:num)", "BookController::deleteAuthorBook/$1");
 
