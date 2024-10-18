@@ -31,3 +31,8 @@ Books API
 /author/delete-book/{book_id} -> [DELETE] -> {Protected Route} 
 
 
+//Insert vs Save Method
+Insert: This method is typically used to add a new record to the database. It usually requires the full data for the new record and does not modify existing records. If you try to use insert with an existing record (e.g., one that has a primary key already in the database), it will usually result in an error.
+
+Save: This method is often more versatile. It can be used to either insert a new record or update an existing record, depending on whether the record already exists in the database. The save method usually checks if the primary key (or another unique identifier) is present; if it is, it updates the existing record, and if not, it inserts a new one.
+
