@@ -76,7 +76,65 @@ class AuthorController extends ResourceController
     //Login Method
     // [POST] -> email, password
     public function loginAuthor(){
-        
+        $validationRules = array(
+            "email" => array(
+                "rules" => "required",
+            ),
+            "password" => array(
+                "rules" => "required",
+            )
+        );
+
+        if(!$this->validate($validationRules)){
+
+            return $this->respond([
+                "status"=> false,
+                "message" => "All fields are required",
+                "errors" => $this->validator->getErrors()
+            ]);
+        }
+
+        // Check Author By Email
+        $authorData = $this->model->where("email", $this->request->getVar("email"))->first();
+        if($authorData){
+
+            if(password_verify($this->request->getVar("password"), $authorData['password'])){
+
+                //Author Exists
+                $key = getenv("JWT_KEY");
+
+                $payloadData = [
+                    "iss" => "localhost",
+                    "aud" => "localhost",
+                    "iat" => time(),
+                    "exp" => time() + 3600, //token value will be expired after current time addon of 1 hour
+                    "user" => [
+                        "id" => $authorData['id'],
+                        "email" => $authorData["email"]
+                    ]
+                ];
+
+                    $token = JWT::encode($payloadData, $key, 'HS256');
+
+                    return $this->respond([
+                        "status" => true,
+                        "message" => "User logged in",
+                        "token" => $token
+                    ]);
+            }else{
+
+                return $this->respond([
+                    "status" => false,
+                    "message" => "Login failed due to incorrect password"
+                ]);
+            }
+        }else{
+
+            return $this->respond([
+                "status" => false,
+                "message" => "Login failed due to incorrect Email Value"
+            ]);
+        }
     }
 
     //Profile Method

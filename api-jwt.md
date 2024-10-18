@@ -18,8 +18,8 @@ Models -  AuthorModel, BookModel
 
 Routes:
 
-/auth/register -> [POST] -> name, email, password, phone_no
-/auth/login -> [POST] -> email, password (Token value - JWT)
+/auth/register -> [POST] -> name, email, password, phone_no -> completed
+/auth/login -> [POST] -> email, password (Token value - JWT) -> completed
 
 /author/profile -> [GET] -> Protected Route
 /author/logout -> [GET] -> Protected Route
