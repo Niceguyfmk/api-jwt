@@ -6,7 +6,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\Phase3\AuthorModel;
 use Firebase\JWT\JWT;
-
+use App\Models\TokenBlacklisted;
 
 class AuthorController extends ResourceController
 {
@@ -150,6 +150,24 @@ class AuthorController extends ResourceController
 
     //Logout Method
     // [GET] -> Protected Method -> Valid Token in req header
-    public function logout(){}
+    public function logout(){
 
-}
+        $token = $this->request -> jwtToken;
+        $tokenBlacklistedObject = new TokenBlacklisted();
+        
+        if($tokenBlacklistedObject ->insert(["token" => $token])){
+
+            return $this->respond([
+                "status" => true,
+                "message" => "Author is logged out",
+            ]);
+        }else{
+            
+            return $this->respond([
+                "status" => false,
+                "message" => "failed to logged out",
+            ]);
+        }
+    }
+
+}   

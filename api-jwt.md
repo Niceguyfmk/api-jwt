@@ -22,7 +22,7 @@ Routes:
 /auth/login -> [POST] -> email, password (Token value - JWT) -> completed
 
 /author/profile -> [GET] -> Protected Route -> completed
-/author/logout -> [GET] -> Protected Route
+/author/logout -> [GET] -> Protected Route -> completed
 
 
 Books API

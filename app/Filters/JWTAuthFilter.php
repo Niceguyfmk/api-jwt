@@ -2,6 +2,7 @@
 
 namespace App\Filters;
 
+use App\Models\TokenBlacklisted;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
@@ -14,7 +15,6 @@ class JWTAuthFilter implements FilterInterface
     
     public function before(RequestInterface $request, $arguments = null)
     {
-        
         $AuthorizationHeader = $request->getServer("HTTP_AUTHORIZATION");
 
         //Check Header Authorization is available
@@ -31,7 +31,18 @@ class JWTAuthFilter implements FilterInterface
 
         //Validate the token value
         try{
-            $request->userData = (array) JWT::decode($AuthorizationHeaderStringArr[1], new Key(getenv("JWT_Key"), "HS256"));
+            $blacklistedObject = new TokenBlacklisted();
+
+            $tokenData = $blacklistedObject->where("token", $AuthorizationHeaderStringArr[1])->first();
+
+            if($tokenData){
+                return $this->unauthorizedResponse();
+            }
+
+            $decodedData = JWT::decode($AuthorizationHeaderStringArr[1], new Key(getenv("JWT_Key"), "HS256"));
+
+            $request->jwtToken = $AuthorizationHeaderStringArr[1];
+            $request->userData = (array) $decodedData;
         }catch(\Exception $ex){
             return $this->failedTokenValidateResponse($ex->getMessage());
         }
