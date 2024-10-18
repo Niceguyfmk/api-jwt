@@ -47,4 +47,9 @@ class BookModel extends Model
     {
         return $this->save($data);
     }
+
+    public function findAuthorBooks($author_id, $userID)
+    {
+        return $this->where($author_id, $userID)->findAll();
+    }
 }
