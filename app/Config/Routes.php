@@ -22,6 +22,6 @@ $routes->group("author", ["namespace" => "App\Controllers\API", "filter" => "jwt
     //Book Routes
     $routes->post("add-book", "BookController::createBook");
     $routes->get("list-book", "BookController::authorBooks");
-    $routes->get("delete-book/(:num)", "BookController::deleteAuthorBook/$1");
+    $routes->delete("delete-book/(:num)", "BookController::deleteAuthorBook/$1");
 
 });

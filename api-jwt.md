@@ -26,9 +26,9 @@ Routes:
 
 
 Books API
-/author/add-book -> [POST] -> {Protected Route} -> name, publication, cost
-/author/list-book -> [GET] -> {Protected Route} 
-/author/delete-book/{book_id} -> [DELETE] -> {Protected Route} 
+/author/add-book -> [POST] -> {Protected Route} -> completed
+/author/list-book -> [GET] -> {Protected Route} -> completed
+/author/delete-book/{book_id} -> [DELETE] -> {Protected Route} -> completed
 
 
 //Insert vs Save Method

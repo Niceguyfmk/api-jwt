@@ -52,4 +52,8 @@ class BookModel extends Model
     {
         return $this->where($author_id, $userID)->findAll();
     }
+
+    public function deleteBook($book_id){
+        return $this->delete($book_id);
+    }
 }

@@ -89,6 +89,33 @@ class BookController extends ResourceController
     // [DELETE] -> Protected Method -> Valid Token value to access it 
     // author_id
     public function deleteAuthorBook($book_id){
+        $tokenInformation = $this->request->userData; 
+        $author_id = $tokenInformation['user']->id;
 
+        $book = $this->model->where(array(
+            'id'=> $book_id,
+            "author_id" => $author_id
+        ))-> first();
+
+        if($book){
+
+            if($this->model->deleteBook($book_id)){
+
+                return $this->respond([
+                    "status" => true,
+                    "message" => "Book has being deleted"
+                ]);
+            } else{
+                return $this->respond([
+                    "status" => false,
+                    "message" => "Failed to delete book"
+                ]);
+            }
+        }else{
+            return $this->respond([
+                "status" => false,
+                "message" => "Book not found"
+            ]);
+        }
     }
 }
