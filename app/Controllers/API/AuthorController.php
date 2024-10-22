@@ -114,13 +114,13 @@ class AuthorController extends ResourceController
                     ]
                 ];
 
-                    $token = JWT::encode($payloadData, $key, 'HS256');
+                $token = JWT::encode($payloadData, $key, 'HS256');
 
-                    return $this->respond([
-                        "status" => true,
-                        "message" => "User logged in",
-                        "token" => $token
-                    ]);
+                return $this->respond([
+                    "status" => true,
+                    "message" => "User logged in",
+                    "token" => $token
+                ]);
             }else{
 
                 return $this->respond([
